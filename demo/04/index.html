@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>4. shuffle-textのデモ</title>
+  <link href="../base.css" rel="stylesheet" />
+  <style>
+    .decode-panel {
+      display: grid;
+      gap: 18px;
+      padding: 22px;
+      background: var(--deep);
+      color: #ebe9fc;
+    }
+
+    .decode-window {
+      display: grid;
+      min-height: 178px;
+      align-content: center;
+      padding: 18px;
+      border-radius: 8px;
+      background: #180f52;
+    }
+
+    .decode-title {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 2.35rem;
+      font-weight: 900;
+      line-height: 1.05;
+      color: #ffffff;
+      word-break: break-word;
+    }
+
+    .decode-panel .control-button {
+      justify-self: center;
+      width: fit-content;
+      color: var(--primary);
+      background: #ebe9fc;
+    }
+
+    @media (max-width: 560px) {
+      .decode-title {
+        font-size: 1.85rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<main class="wrapper">
+  <section class="panel decode-panel">
+    <div class="decode-window">
+      <h2 class="decode-title js-shuffle-title">MIDNIGHT TYPE SIGNAL</h2>
+    </div>
+
+    <button class="control-button js-decode" type="button">Play</button>
+  </section>
+</main>
+
+<script type="module">
+  import ShuffleText from "https://esm.sh/shuffle-text@0.5.2";
+
+  const title = document.querySelector(".js-shuffle-title");
+  const phrases = [
+    "MIDNIGHT TYPE SIGNAL",
+    "COPY FROM THE FUTURE",
+    "WORDS ARE ON AIR",
+    "READY FOR PUBLISH",
+  ];
+
+  const shuffle = new ShuffleText(title);
+  shuffle.duration = 760;
+  shuffle.emptyCharacter = ".";
+  shuffle.sourceRandomCharacter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#*";
+
+  let phraseIndex = 0;
+
+  function decodeNextTitle() {
+    phraseIndex = (phraseIndex + 1) % phrases.length;
+
+    // 収束後に読みたい短い見出しだけを差し替える
+    shuffle.setText(phrases[phraseIndex]);
+    shuffle.start();
+  }
+
+  document.querySelector(".js-decode").addEventListener("click", decodeNextTitle);
+</script>
+</body>
+</html>

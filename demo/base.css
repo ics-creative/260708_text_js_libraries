@@ -1,0 +1,111 @@
+@import url("https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --ink: #1f1b3f;
+  --muted: #6f6a8c;
+  --base: #ffffff;
+  --soft: #f5f3ff;
+  --soft-blue: #e7f5fb;
+  --soft-purple: #ebe9fc;
+  --deep: #21136f;
+  --primary: #3223b3;
+  --accent: #bab4ff;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 24px;
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1.7;
+  color: var(--ink);
+  background-color: #2b2840;
+}
+
+button,
+input {
+  font-family: inherit;
+  font-weight: bold;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+}
+
+.wrapper {
+  display: grid;
+  gap: 16px;
+  width: min(560px, calc(100% - 32px));
+  min-width: 0;
+  padding: 24px;
+  border-radius: 10px;
+  background: var(--base);
+}
+
+.panel {
+  min-width: 0;
+  border-radius: 8px;
+  background: var(--soft);
+}
+
+.control-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.control-button,
+.mini-button {
+  border-radius: 8px;
+  color: #ffffff;
+  background: var(--primary);
+}
+
+.control-button {
+  justify-self: center;
+  min-width: 132px;
+  padding: 10px 16px;
+}
+
+.mini-button {
+  min-width: 76px;
+  padding: 8px 10px;
+}
+
+.control-button:active,
+.mini-button:active {
+  transform: translateY(1px);
+  background: var(--deep);
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+@media (max-width: 520px) {
+  body {
+    padding: 16px;
+  }
+
+  .wrapper {
+    padding: 16px;
+  }
+}

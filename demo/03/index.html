@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>3. Torphのデモ</title>
+  <link href="../base.css" rel="stylesheet" />
+  <style>
+    .morph-panel {
+      display: grid;
+      gap: 18px;
+      padding: 22px;
+      overflow: hidden;
+      background: var(--soft);
+    }
+
+    .morph-title {
+      display: grid;
+      place-items: center;
+      min-height: 140px;
+      font-size: 3rem;
+      line-height: 1.05;
+    }
+
+    .morph-word {
+      width: fit-content;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .word-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .mini-button.is-current {
+      background: var(--deep);
+    }
+
+    @media (max-width: 560px) {
+      .morph-title {
+        min-height: 116px;
+        font-size: 2.3rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<main class="wrapper">
+  <section class="panel morph-panel">
+    <h2 class="morph-title">
+      <span class="morph-word js-morph-word">Draft</span>
+    </h2>
+
+    <div class="word-buttons">
+      <button class="mini-button js-word-button is-current" data-word="Draft" type="button">Draft</button>
+      <button class="mini-button js-word-button" data-word="Proof" type="button">Proof</button>
+      <button class="mini-button js-word-button" data-word="Tune" type="button">Tune</button>
+      <button class="mini-button js-word-button" data-word="Publish" type="button">Publish</button>
+    </div>
+  </section>
+</main>
+
+<script type="module">
+  import { TextMorph } from "https://esm.sh/torph@0.0.9";
+
+  const wordElement = document.querySelector(".js-morph-word");
+  const buttons = [...document.querySelectorAll(".js-word-button")];
+  const words = buttons.map((button) => button.dataset.word);
+
+  const morph = new TextMorph({
+    element: wordElement,
+    duration: 460,
+    ease: "cubic-bezier(0.19, 1, 0.22, 1)",
+    locale: "en",
+  });
+
+  let wordIndex = 0;
+
+  function updateWord(nextIndex) {
+    wordIndex = nextIndex;
+
+    // 現在の語だけを強調し、どの言葉へ変化したかを見失わないようにする
+    buttons.forEach((button, index) => {
+      button.classList.toggle("is-current", index === wordIndex);
+    });
+
+    morph.update(words[wordIndex]);
+  }
+
+  buttons.forEach((button, index) => {
+    button.addEventListener("click", () => {
+      updateWord(index);
+    });
+  });
+
+  updateWord(0);
+</script>
+</body>
+</html>

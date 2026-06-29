@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>2. NumberFlowのデモ</title>
+  <link href="../base.css" rel="stylesheet" />
+  <style>
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric-card {
+      display: grid;
+      place-items: center;
+      min-height: 132px;
+      padding: 16px;
+    }
+
+    .metric-card:nth-child(1) {
+      background: var(--soft-blue);
+    }
+
+    .metric-card:nth-child(2) {
+      background: var(--soft);
+    }
+
+    .metric-card:nth-child(3) {
+      background: var(--soft-purple);
+    }
+
+    .metric-card:nth-child(4) {
+      background: #f5f3ff;
+    }
+
+    number-flow {
+      width: fit-content;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 2.45rem;
+      font-weight: 850;
+      line-height: 1.05;
+      color: var(--ink);
+    }
+
+    @media (max-width: 560px) {
+      .metric-grid {
+        grid-template-columns: 1fr;
+      }
+
+      number-flow {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<main class="wrapper">
+  <section class="metric-grid">
+    <div class="panel metric-card">
+      <number-flow class="js-flow" data-will-change></number-flow>
+    </div>
+
+    <div class="panel metric-card">
+      <number-flow class="js-flow" data-will-change></number-flow>
+    </div>
+
+    <div class="panel metric-card">
+      <number-flow class="js-flow" data-will-change></number-flow>
+    </div>
+
+    <div class="panel metric-card">
+      <number-flow class="js-flow" data-will-change></number-flow>
+    </div>
+  </section>
+
+  <div class="control-row">
+    <button class="control-button js-update" type="button">Update</button>
+  </div>
+</main>
+
+<script type="module">
+  import { continuous } from "https://esm.sh/number-flow@0.6.0";
+
+  const flows = [...document.querySelectorAll(".js-flow")];
+  const metricSets = [
+    [12480, 37, 86000, 88],
+    [13520, 14, 92000, 94],
+    [11890, 52, 76000, 81],
+    [14240, 21, 104000, 97],
+  ];
+
+  let metricIndex = 0;
+
+  flows.forEach((flow, index) => {
+    // 数字のフォーマットは用途ごとに変え、UIの文脈を短く保つ
+    if (index === 2) {
+      flow.format = { style: "currency", currency: "JPY", maximumFractionDigits: 0 };
+    } else {
+      flow.format = { maximumFractionDigits: 0 };
+    }
+
+    flow.locales = "ja-JP";
+    flow.plugins = [continuous];
+    flow.update(metricSets[metricIndex][index]);
+  });
+
+  function updateMetrics() {
+    metricIndex = (metricIndex + 1) % metricSets.length;
+
+    flows.forEach((flow, index) => {
+      flow.update(metricSets[metricIndex][index]);
+    });
+  }
+
+  document.querySelector(".js-update").addEventListener("click", updateMetrics);
+</script>
+</body>
+</html>

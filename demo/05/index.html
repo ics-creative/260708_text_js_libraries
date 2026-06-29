@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>5. Fittyのデモ</title>
+  <link href="../base.css" rel="stylesheet" />
+  <style>
+    .fit-panel {
+      display: grid;
+      gap: 18px;
+      min-width: 0;
+      padding: 22px;
+      background: var(--soft-blue);
+    }
+
+    .fit-stage {
+      display: grid;
+      justify-items: center;
+      min-width: 0;
+      min-height: 200px;
+      align-items: center;
+      padding: 18px;
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .fit-frame {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: min(var(--fit-width, 420px), 100%);
+      max-width: 100%;
+      min-height: 128px;
+      padding: 14px;
+      border-radius: 8px;
+      background: var(--soft-purple);
+      overflow: hidden;
+    }
+
+    .fit-title {
+      display: inline-block;
+      white-space: nowrap;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 64px;
+      font-weight: 900;
+      line-height: 0.95;
+      text-align: center;
+      color: var(--ink);
+    }
+
+    .fit-inner {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .range-field {
+      min-width: 0;
+    }
+
+    .width-range {
+      width: 100%;
+      accent-color: var(--primary);
+    }
+
+    @media (max-width: 560px) {
+      .fit-title {
+        font-size: 48px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<main class="wrapper">
+  <section class="panel fit-panel">
+    <div class="fit-stage">
+      <div class="fit-frame js-fit-frame">
+        <div class="fit-inner">
+          <p class="fit-title js-fit-title">TEXT FITS HERE</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="range-field">
+      <input class="width-range js-width-range" max="560" min="220" type="range" value="420" />
+    </div>
+
+    <div class="control-row">
+      <button class="mini-button js-copy-button" data-copy="TEXT FITS HERE" type="button">short</button>
+      <button class="mini-button js-copy-button" data-copy="RESPONSIVE HEADLINE" type="button">middle</button>
+      <button class="mini-button js-copy-button" data-copy="A VERY LONG TITLE STAYS INSIDE" type="button">long</button>
+    </div>
+  </section>
+</main>
+
+<script type="module">
+  import fitty from "https://esm.sh/fitty@2.4.2";
+
+  const frame = document.querySelector(".js-fit-frame");
+  const title = document.querySelector(".js-fit-title");
+  const range = document.querySelector(".js-width-range");
+  const buttons = [...document.querySelectorAll(".js-copy-button")];
+
+  const fittedTitle = fitty(title, {
+    // デザイン上の下限と上限を決め、極端に小さい文字や巨大な文字を避ける
+    minSize: 24,
+    maxSize: 72,
+  });
+
+  function fitToCurrentFrame() {
+    frame.style.setProperty("--fit-width", `${range.value}px`);
+
+    // 幅を変更した直後に、Fittyへ再計算を促す
+    window.requestAnimationFrame(() => {
+      fittedTitle.fit({ sync: true });
+    });
+  }
+
+  range.addEventListener("input", fitToCurrentFrame);
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      title.textContent = button.dataset.copy;
+      fittedTitle.fit({ sync: true });
+    });
+  });
+
+  fitToCurrentFrame();
+</script>
+</body>
+</html>
