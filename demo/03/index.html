@@ -53,21 +53,22 @@
       color: #ffffff;
       border-radius: 36px 36px 0 0;
       box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.22);
+      font-size: 3.15rem;
     }
 
     .number-text {
       min-width: 0;
       overflow: hidden;
-      font-size: 3.15rem;
+      font-size: inherit;
       line-height: 1;
       text-overflow: ellipsis;
     }
 
     .number-cursor {
       flex: 0 0 auto;
-      width: 3px;
-      height: 1em;
-      margin: 0 0 0 9px;
+      width: 0.08em;
+      height: 1.15em;
+      margin: 0 0 -0.06em 0.16em;
       border-radius: 999px;
       background: rgba(255, 255, 255, 0.42);
       animation: blink 1s steps(2, start) infinite;
@@ -91,9 +92,6 @@
 
       .number-field {
         min-height: 78px;
-      }
-
-      .number-text {
         font-size: 2.45rem;
       }
     }
@@ -104,7 +102,7 @@
 <main class="wrapper">
   <section class="panel morph-panel">
     <h2 class="morph-title">
-      <span class="morph-word js-morph-word">Type</span>
+      <span class="morph-word js-morph-word">Copy</span>
     </h2>
 
     <div class="number-stage">
@@ -126,17 +124,17 @@
   const wordElement = document.querySelector(".js-morph-word");
   const numberElement = document.querySelector(".js-number-label");
   const scenes = [
-    { word: "Type", number: "2" },
-    { word: "Flow", number: "20" },
-    { word: "Shift", number: "20." },
-    { word: "Launch", number: "20.8" },
+    { word: "Copy", number: "2" },
+    { word: "Copied", number: "20" },
+    { word: "コピー中", number: "20." },
+    { word: "コピー完了", number: "20.8" },
   ];
 
   const wordMorph = new TextMorph({
     element: wordElement,
     duration: 460,
     ease: "cubic-bezier(0.19, 1, 0.22, 1)",
-    locale: "en",
+    locale: "ja",
   });
 
   const numberMorph = new TextMorph({
