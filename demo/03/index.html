@@ -73,17 +73,6 @@
       animation: blink 1s steps(2, start) infinite;
     }
 
-    .word-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      justify-content: center;
-    }
-
-    .mini-button.is-current {
-      background: var(--deep);
-    }
-
     @keyframes blink {
       50% {
         opacity: 0;
@@ -115,7 +104,7 @@
 <main class="wrapper">
   <section class="panel morph-panel">
     <h2 class="morph-title">
-      <span class="morph-word js-morph-word">Draft</span>
+      <span class="morph-word js-morph-word">Type</span>
     </h2>
 
     <div class="number-stage">
@@ -125,11 +114,8 @@
       </div>
     </div>
 
-    <div class="word-buttons">
-      <button class="mini-button js-word-button is-current" data-number="2" data-word="Draft" type="button">Draft</button>
-      <button class="mini-button js-word-button" data-number="20" data-word="Proof" type="button">Proof</button>
-      <button class="mini-button js-word-button" data-number="20." data-word="Tune" type="button">Tune</button>
-      <button class="mini-button js-word-button" data-number="20.8" data-word="Publish" type="button">Publish</button>
+    <div class="control-row">
+      <button class="control-button js-change" type="button">Change</button>
     </div>
   </section>
 </main>
@@ -139,7 +125,12 @@
 
   const wordElement = document.querySelector(".js-morph-word");
   const numberElement = document.querySelector(".js-number-label");
-  const buttons = [...document.querySelectorAll(".js-word-button")];
+  const scenes = [
+    { word: "Type", number: "2" },
+    { word: "Flow", number: "20" },
+    { word: "Shift", number: "20." },
+    { word: "Launch", number: "20.8" },
+  ];
 
   const wordMorph = new TextMorph({
     element: wordElement,
@@ -159,22 +150,15 @@
 
   function updateDemo(nextIndex) {
     wordIndex = nextIndex;
-    const button = buttons[wordIndex];
-
-    // 現在の語だけを強調し、どの言葉へ変化したかを見失わないようにする
-    buttons.forEach((item, index) => {
-      item.classList.toggle("is-current", index === wordIndex);
-    });
+    const scene = scenes[wordIndex];
 
     // 見出しの語と数値入力風の表示を同じタイミングで切り替える
-    wordMorph.update(button.dataset.word);
-    numberMorph.update(button.dataset.number);
+    wordMorph.update(scene.word);
+    numberMorph.update(scene.number);
   }
 
-  buttons.forEach((button, index) => {
-    button.addEventListener("click", () => {
-      updateDemo(index);
-    });
+  document.querySelector(".js-change").addEventListener("click", () => {
+    updateDemo((wordIndex + 1) % scenes.length);
   });
 
   updateDemo(0);
