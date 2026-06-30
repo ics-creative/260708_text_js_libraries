@@ -8,90 +8,162 @@
   <style>
     .morph-panel {
       display: grid;
-      gap: 16px;
+      gap: 14px;
       padding: 22px;
       overflow: hidden;
       background: var(--soft);
     }
 
-    .morph-title {
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .demo-cell {
+      position: relative;
       display: grid;
       place-items: center;
-      min-height: 140px;
-      font-size: 3rem;
-      line-height: 1.05;
-    }
-
-    .morph-word,
-    .typing-text {
-      width: fit-content;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-weight: 900;
-    }
-
-    .morph-word {
-      color: var(--primary);
-    }
-
-    .typing-stage {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 96px;
-      padding: 18px;
+      min-height: 136px;
+      padding: 16px;
       overflow: hidden;
       color: #ffffff;
       background: var(--deep);
     }
 
-    .typing-line {
+    .demo-cell:nth-child(2) {
+      background: var(--primary);
+    }
+
+    .demo-cell:nth-child(3) {
+      background: #4536c6;
+    }
+
+    .demo-cell:nth-child(4) {
+      background: #272342;
+    }
+
+    .status-pill,
+    .price-button,
+    .copy-chip,
+    .number-field {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
-      max-width: 460px;
-      min-height: 54px;
-      padding: 12px 14px;
+      max-width: 100%;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-weight: 800;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .status-pill {
+      gap: 10px;
+      min-width: 214px;
+      padding: 10px 16px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .status-icon {
+      position: relative;
+      flex: 0 0 auto;
+      width: 22px;
+      height: 22px;
+    }
+
+    .status-icon::before,
+    .status-icon::after {
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+      content: "";
+    }
+
+    .status-icon::before {
+      border: 3px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .status-icon::after {
+      border: 3px solid transparent;
+      border-top-color: #ffffff;
+      transform: rotate(var(--icon-rotation, 0deg));
+      transition: transform 520ms cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    .status-label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .copy-chip {
+      position: absolute;
+      top: 18px;
+      right: -6px;
+      min-width: 92px;
+      padding: 9px 14px;
       border-radius: 8px;
       background: rgba(255, 255, 255, 0.12);
       box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
     }
 
-    .prompt-mark {
-      flex: 0 0 auto;
-      margin-right: 8px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      color: var(--accent);
+    .copy-lines {
+      display: grid;
+      gap: 8px;
+      width: min(100%, 220px);
     }
 
-    .typing-text {
+    .copy-line {
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .copy-line:nth-child(1) {
+      width: 82%;
+    }
+
+    .copy-line:nth-child(2) {
+      width: 100%;
+    }
+
+    .copy-line:nth-child(3) {
+      width: 58%;
+    }
+
+    .price-button {
+      min-width: 222px;
+      padding: 11px 16px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.14);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+    }
+
+    .number-field {
+      min-width: 160px;
+      min-height: 86px;
+      padding: 14px 18px;
+      align-items: flex-end;
+      border-radius: 22px 22px 0 0;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+      font-size: 2.4rem;
+    }
+
+    .number-text {
       min-width: 0;
-      max-width: 100%;
       overflow: hidden;
-      font-size: 1.2rem;
-      line-height: 1.2;
-      white-space: nowrap;
       text-overflow: ellipsis;
     }
 
-    .typing-cursor {
+    .number-cursor {
       flex: 0 0 auto;
       width: 2px;
-      height: 1.35em;
-      margin-left: 5px;
-      background: var(--accent);
+      height: 0.95em;
+      margin: 0 0 0.08em 6px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.35);
       animation: blink 1s steps(2, start) infinite;
-    }
-
-    .word-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      justify-content: center;
-    }
-
-    .mini-button.is-current {
-      background: var(--deep);
     }
 
     @keyframes blink {
@@ -101,17 +173,16 @@
     }
 
     @media (max-width: 560px) {
-      .morph-title {
-        min-height: 116px;
-        font-size: 2.3rem;
+      .demo-grid {
+        grid-template-columns: 1fr;
       }
 
-      .typing-line {
-        justify-content: flex-start;
+      .demo-cell {
+        min-height: 112px;
       }
 
-      .typing-text {
-        font-size: 1rem;
+      .number-field {
+        font-size: 2rem;
       }
     }
   </style>
@@ -120,30 +191,37 @@
 <body>
 <main class="wrapper">
   <section class="panel morph-panel">
-    <h2 class="morph-title">
-      <span class="morph-word js-morph-word">Draft</span>
-    </h2>
+    <div class="demo-grid">
+      <div class="panel demo-cell">
+        <div class="status-pill">
+          <span class="status-icon js-status-icon"></span>
+          <span class="status-label js-status-label">Processing Transaction</span>
+        </div>
+      </div>
 
-    <div class="word-buttons">
-      <button class="mini-button js-word-button is-current" data-word="Draft" type="button">Draft</button>
-      <button class="mini-button js-word-button" data-word="Proof" type="button">Proof</button>
-      <button class="mini-button js-word-button" data-word="Tune" type="button">Tune</button>
-      <button class="mini-button js-word-button" data-word="Publish" type="button">Publish</button>
-    </div>
+      <div class="panel demo-cell">
+        <div class="copy-lines">
+          <span class="copy-line"></span>
+          <span class="copy-line"></span>
+          <span class="copy-line"></span>
+        </div>
+        <div class="copy-chip js-copy-label">Copy</div>
+      </div>
 
-    <div class="panel typing-stage">
-      <div class="typing-line">
-        <span class="prompt-mark">$</span>
-        <span class="typing-text js-typing-text">npm i torph</span>
-        <span class="typing-cursor"></span>
+      <div class="panel demo-cell">
+        <div class="price-button js-price-label">Buy for ¥1,980 / Month</div>
+      </div>
+
+      <div class="panel demo-cell">
+        <div class="number-field">
+          <span class="number-text js-number-label">¥2</span>
+          <span class="number-cursor"></span>
+        </div>
       </div>
     </div>
 
-    <div class="word-buttons">
-      <button class="mini-button js-line-button is-current" data-line="npm i torph" type="button">Install</button>
-      <button class="mini-button js-line-button" data-line="Copied to Clipboard" type="button">Copy</button>
-      <button class="mini-button js-line-button" data-line="Buy for ¥1,980 / Month" type="button">Price</button>
-      <button class="mini-button js-line-button" data-line="Processing Draft" type="button">Status</button>
+    <div class="control-row">
+      <button class="control-button js-next" type="button">Change</button>
     </div>
   </section>
 </main>
@@ -151,66 +229,80 @@
 <script type="module">
   import { TextMorph } from "https://esm.sh/torph@0.0.9";
 
-  const wordElement = document.querySelector(".js-morph-word");
-  const buttons = [...document.querySelectorAll(".js-word-button")];
-  const words = buttons.map((button) => button.dataset.word);
-  const lineElement = document.querySelector(".js-typing-text");
-  const lineButtons = [...document.querySelectorAll(".js-line-button")];
-  const lines = lineButtons.map((button) => button.dataset.line);
+  const statusIcon = document.querySelector(".js-status-icon");
+  const morphs = {
+    status: new TextMorph({
+      element: document.querySelector(".js-status-label"),
+      duration: 560,
+      ease: "cubic-bezier(0.41, 1.03, 0.6, 1.03)",
+      locale: "en",
+    }),
+    copy: new TextMorph({
+      element: document.querySelector(".js-copy-label"),
+      duration: 420,
+      locale: "en",
+    }),
+    price: new TextMorph({
+      element: document.querySelector(".js-price-label"),
+      duration: 500,
+      locale: "en",
+    }),
+    number: new TextMorph({
+      element: document.querySelector(".js-number-label"),
+      duration: 360,
+      locale: "ja",
+    }),
+  };
+  const scenes = [
+    {
+      status: "Processing Transaction",
+      copy: "Copy",
+      price: "Buy for ¥1,980 / Month",
+      number: "¥2",
+      rotation: "0deg",
+    },
+    {
+      status: "Transaction Safe",
+      copy: "Copied",
+      price: "Buy for ¥18,000 / Year",
+      number: "¥20",
+      rotation: "160deg",
+    },
+    {
+      status: "Processing Draft",
+      copy: "Paste",
+      price: "Start for Free",
+      number: "¥20.",
+      rotation: "320deg",
+    },
+    {
+      status: "Draft Published",
+      copy: "Pasted",
+      price: "Upgrade for ¥980",
+      number: "¥20.8",
+      rotation: "480deg",
+    },
+  ];
 
-  const morph = new TextMorph({
-    element: wordElement,
-    duration: 460,
-    ease: "cubic-bezier(0.19, 1, 0.22, 1)",
-    locale: "en",
-  });
-  const lineMorph = new TextMorph({
-    element: lineElement,
-    duration: 520,
-    ease: "cubic-bezier(0.19, 1, 0.22, 1)",
-    locale: "en",
-    scale: false,
-  });
+  let sceneIndex = 0;
 
-  let wordIndex = 0;
-  let lineIndex = 0;
+  function updateScene(nextIndex) {
+    sceneIndex = nextIndex;
+    const scene = scenes[sceneIndex];
 
-  function updateWord(nextIndex) {
-    wordIndex = nextIndex;
-
-    // 現在の語だけを強調し、どの言葉へ変化したかを見失わないようにする
-    buttons.forEach((button, index) => {
-      button.classList.toggle("is-current", index === wordIndex);
-    });
-
-    morph.update(words[wordIndex]);
+    // 本家デモと同じように、複数のUIパーツへTextMorphを適用して表現の幅を見せる
+    morphs.status.update(scene.status);
+    morphs.copy.update(scene.copy);
+    morphs.price.update(scene.price);
+    morphs.number.update(scene.number);
+    statusIcon.style.setProperty("--icon-rotation", scene.rotation);
   }
 
-  function updateLine(nextIndex) {
-    lineIndex = nextIndex;
-
-    // 入力カーソルの前に置いたテキストだけを差し替え、カーソルが追いかける見え方にする
-    lineButtons.forEach((button, index) => {
-      button.classList.toggle("is-current", index === lineIndex);
-    });
-
-    lineMorph.update(lines[lineIndex]);
-  }
-
-  buttons.forEach((button, index) => {
-    button.addEventListener("click", () => {
-      updateWord(index);
-    });
+  document.querySelector(".js-next").addEventListener("click", () => {
+    updateScene((sceneIndex + 1) % scenes.length);
   });
 
-  lineButtons.forEach((button, index) => {
-    button.addEventListener("click", () => {
-      updateLine(index);
-    });
-  });
-
-  updateWord(0);
-  updateLine(0);
+  updateScene(0);
 </script>
 </body>
 </html>
