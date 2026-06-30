@@ -8,162 +8,80 @@
   <style>
     .morph-panel {
       display: grid;
-      gap: 14px;
+      gap: 18px;
       padding: 22px;
       overflow: hidden;
       background: var(--soft);
     }
 
-    .demo-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .demo-cell {
-      position: relative;
+    .morph-title {
       display: grid;
       place-items: center;
-      min-height: 136px;
-      padding: 16px;
+      min-height: 140px;
+      font-size: 3rem;
+      line-height: 1.05;
+    }
+
+    .morph-word,
+    .number-text {
+      width: fit-content;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-weight: 900;
+    }
+
+    .morph-word {
+      color: var(--primary);
+    }
+
+    .number-stage {
+      display: grid;
+      place-items: center;
+      min-height: 118px;
+      padding: 18px;
       overflow: hidden;
-      color: #ffffff;
+      border-radius: 8px;
       background: var(--deep);
     }
 
-    .demo-cell:nth-child(2) {
-      background: var(--primary);
-    }
-
-    .demo-cell:nth-child(3) {
-      background: #4536c6;
-    }
-
-    .demo-cell:nth-child(4) {
-      background: #272342;
-    }
-
-    .status-pill,
-    .price-button,
-    .copy-chip,
     .number-field {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      max-width: 100%;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-weight: 800;
-      line-height: 1.2;
-      white-space: nowrap;
-    }
-
-    .status-pill {
-      gap: 10px;
-      min-width: 214px;
-      padding: 10px 16px;
-      overflow: hidden;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.12);
-    }
-
-    .status-icon {
-      position: relative;
-      flex: 0 0 auto;
-      width: 22px;
-      height: 22px;
-    }
-
-    .status-icon::before,
-    .status-icon::after {
-      position: absolute;
-      inset: 0;
-      border-radius: 999px;
-      content: "";
-    }
-
-    .status-icon::before {
-      border: 3px solid rgba(255, 255, 255, 0.16);
-    }
-
-    .status-icon::after {
-      border: 3px solid transparent;
-      border-top-color: #ffffff;
-      transform: rotate(var(--icon-rotation, 0deg));
-      transition: transform 520ms cubic-bezier(0.19, 1, 0.22, 1);
-    }
-
-    .status-label {
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .copy-chip {
-      position: absolute;
-      top: 18px;
-      right: -6px;
-      min-width: 92px;
-      padding: 9px 14px;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.12);
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
-    }
-
-    .copy-lines {
-      display: grid;
-      gap: 8px;
-      width: min(100%, 220px);
-    }
-
-    .copy-line {
-      height: 8px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.2);
-    }
-
-    .copy-line:nth-child(1) {
-      width: 82%;
-    }
-
-    .copy-line:nth-child(2) {
-      width: 100%;
-    }
-
-    .copy-line:nth-child(3) {
-      width: 58%;
-    }
-
-    .price-button {
-      min-width: 222px;
-      padding: 11px 16px;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.14);
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
-    }
-
-    .number-field {
-      min-width: 160px;
-      min-height: 86px;
-      padding: 14px 18px;
       align-items: flex-end;
-      border-radius: 22px 22px 0 0;
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
-      font-size: 2.4rem;
+      justify-content: center;
+      width: min(100%, 318px);
+      min-height: 88px;
+      padding: 16px 20px 18px;
+      color: #ffffff;
+      border-radius: 36px 36px 0 0;
+      box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.22);
     }
 
     .number-text {
       min-width: 0;
       overflow: hidden;
+      font-size: 3.15rem;
+      line-height: 1;
       text-overflow: ellipsis;
     }
 
     .number-cursor {
       flex: 0 0 auto;
-      width: 2px;
-      height: 0.95em;
-      margin: 0 0 0.08em 6px;
+      width: 3px;
+      height: 1em;
+      margin: 0 0 0 9px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.42);
       animation: blink 1s steps(2, start) infinite;
+    }
+
+    .word-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .mini-button.is-current {
+      background: var(--deep);
     }
 
     @keyframes blink {
@@ -173,16 +91,21 @@
     }
 
     @media (max-width: 560px) {
-      .demo-grid {
-        grid-template-columns: 1fr;
+      .morph-title {
+        min-height: 116px;
+        font-size: 2.3rem;
       }
 
-      .demo-cell {
-        min-height: 112px;
+      .number-stage {
+        min-height: 104px;
       }
 
       .number-field {
-        font-size: 2rem;
+        min-height: 78px;
+      }
+
+      .number-text {
+        font-size: 2.45rem;
       }
     }
   </style>
@@ -191,37 +114,22 @@
 <body>
 <main class="wrapper">
   <section class="panel morph-panel">
-    <div class="demo-grid">
-      <div class="panel demo-cell">
-        <div class="status-pill">
-          <span class="status-icon js-status-icon"></span>
-          <span class="status-label js-status-label">Processing Transaction</span>
-        </div>
-      </div>
+    <h2 class="morph-title">
+      <span class="morph-word js-morph-word">Draft</span>
+    </h2>
 
-      <div class="panel demo-cell">
-        <div class="copy-lines">
-          <span class="copy-line"></span>
-          <span class="copy-line"></span>
-          <span class="copy-line"></span>
-        </div>
-        <div class="copy-chip js-copy-label">Copy</div>
-      </div>
-
-      <div class="panel demo-cell">
-        <div class="price-button js-price-label">Buy for ¥1,980 / Month</div>
-      </div>
-
-      <div class="panel demo-cell">
-        <div class="number-field">
-          <span class="number-text js-number-label">¥2</span>
-          <span class="number-cursor"></span>
-        </div>
+    <div class="number-stage">
+      <div class="number-field">
+        <span class="number-text js-number-label">2</span>
+        <span class="number-cursor"></span>
       </div>
     </div>
 
-    <div class="control-row">
-      <button class="control-button js-next" type="button">Change</button>
+    <div class="word-buttons">
+      <button class="mini-button js-word-button is-current" data-number="2" data-word="Draft" type="button">Draft</button>
+      <button class="mini-button js-word-button" data-number="20" data-word="Proof" type="button">Proof</button>
+      <button class="mini-button js-word-button" data-number="20." data-word="Tune" type="button">Tune</button>
+      <button class="mini-button js-word-button" data-number="20.8" data-word="Publish" type="button">Publish</button>
     </div>
   </section>
 </main>
@@ -229,80 +137,47 @@
 <script type="module">
   import { TextMorph } from "https://esm.sh/torph@0.0.9";
 
-  const statusIcon = document.querySelector(".js-status-icon");
-  const morphs = {
-    status: new TextMorph({
-      element: document.querySelector(".js-status-label"),
-      duration: 560,
-      ease: "cubic-bezier(0.41, 1.03, 0.6, 1.03)",
-      locale: "en",
-    }),
-    copy: new TextMorph({
-      element: document.querySelector(".js-copy-label"),
-      duration: 420,
-      locale: "en",
-    }),
-    price: new TextMorph({
-      element: document.querySelector(".js-price-label"),
-      duration: 500,
-      locale: "en",
-    }),
-    number: new TextMorph({
-      element: document.querySelector(".js-number-label"),
-      duration: 360,
-      locale: "ja",
-    }),
-  };
-  const scenes = [
-    {
-      status: "Processing Transaction",
-      copy: "Copy",
-      price: "Buy for ¥1,980 / Month",
-      number: "¥2",
-      rotation: "0deg",
-    },
-    {
-      status: "Transaction Safe",
-      copy: "Copied",
-      price: "Buy for ¥18,000 / Year",
-      number: "¥20",
-      rotation: "160deg",
-    },
-    {
-      status: "Processing Draft",
-      copy: "Paste",
-      price: "Start for Free",
-      number: "¥20.",
-      rotation: "320deg",
-    },
-    {
-      status: "Draft Published",
-      copy: "Pasted",
-      price: "Upgrade for ¥980",
-      number: "¥20.8",
-      rotation: "480deg",
-    },
-  ];
+  const wordElement = document.querySelector(".js-morph-word");
+  const numberElement = document.querySelector(".js-number-label");
+  const buttons = [...document.querySelectorAll(".js-word-button")];
 
-  let sceneIndex = 0;
-
-  function updateScene(nextIndex) {
-    sceneIndex = nextIndex;
-    const scene = scenes[sceneIndex];
-
-    // 本家デモと同じように、複数のUIパーツへTextMorphを適用して表現の幅を見せる
-    morphs.status.update(scene.status);
-    morphs.copy.update(scene.copy);
-    morphs.price.update(scene.price);
-    morphs.number.update(scene.number);
-    statusIcon.style.setProperty("--icon-rotation", scene.rotation);
-  }
-
-  document.querySelector(".js-next").addEventListener("click", () => {
-    updateScene((sceneIndex + 1) % scenes.length);
+  const wordMorph = new TextMorph({
+    element: wordElement,
+    duration: 460,
+    ease: "cubic-bezier(0.19, 1, 0.22, 1)",
+    locale: "en",
   });
 
-  updateScene(0);
+  const numberMorph = new TextMorph({
+    element: numberElement,
+    duration: 360,
+    ease: "cubic-bezier(0.19, 1, 0.22, 1)",
+    locale: "ja",
+  });
+
+  let wordIndex = 0;
+
+  function updateDemo(nextIndex) {
+    wordIndex = nextIndex;
+    const button = buttons[wordIndex];
+
+    // 現在の語だけを強調し、どの言葉へ変化したかを見失わないようにする
+    buttons.forEach((item, index) => {
+      item.classList.toggle("is-current", index === wordIndex);
+    });
+
+    // 見出しの語と数値入力風の表示を同じタイミングで切り替える
+    wordMorph.update(button.dataset.word);
+    numberMorph.update(button.dataset.number);
+  }
+
+  buttons.forEach((button, index) => {
+    button.addEventListener("click", () => {
+      updateDemo(index);
+    });
+  });
+
+  updateDemo(0);
 </script>
 </body>
 </html>
