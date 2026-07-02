@@ -10,8 +10,8 @@
 
 ## 利用ライブラリ
 
-- slot-text 0.3.1
-- number-flow 0.6.0
-- torph 0.0.9
-- shuffle-text 0.5.2
-- fitty 2.4.2
+- [slot-text](https://github.com/Danilaa1/slot-text) 0.3.1
+- [number-flow](https://github.com/barvian/number-flow) 0.6.0
+- [torph](https://github.com/lochie/torph) 0.0.9
+- [shuffle-text](https://github.com/ics-ikeda/shuffle-text) 0.5.2
+- [fitty](https://github.com/rikschennink/fitty) 2.4.2
