@@ -8,7 +8,7 @@
   <style>
     .fit-panel {
       display: grid;
-      gap: 18px;
+      gap: 16px;
       min-width: 0;
       padding: 22px;
       background: var(--soft-blue);
@@ -29,7 +29,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: min(var(--fit-width, 320px), 100%);
+      width: min(var(--fit-width, 280px), 100%);
       max-width: 100%;
       min-height: 128px;
       padding: 14px;
@@ -42,7 +42,7 @@
       display: inline-block;
       white-space: nowrap;
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 96px;
+      font-size: 120px;
       font-weight: 900;
       line-height: 0.95;
       text-align: center;
@@ -60,6 +60,14 @@
       min-width: 0;
     }
 
+    .range-label {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 4px;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
     .width-range {
       width: 100%;
       accent-color: var(--primary);
@@ -67,7 +75,7 @@
 
     @media (max-width: 560px) {
       .fit-title {
-        font-size: 48px;
+        font-size: 96px;
       }
     }
   </style>
@@ -79,19 +87,20 @@
     <div class="fit-stage">
       <div class="fit-frame js-fit-frame">
         <div class="fit-inner">
-          <p class="fit-title js-fit-title">FLEXIBLE TEXT LAYOUT</p>
+          <p class="fit-title js-fit-title">RESPONSIVE HEADLINE LAYOUT</p>
         </div>
       </div>
     </div>
 
     <div class="range-field">
-      <input class="width-range js-width-range" max="420" min="180" type="range" value="320" />
+      <p class="range-label"><span class="js-width-label">280</span>px</p>
+      <input class="width-range js-width-range" max="380" min="150" type="range" value="280" />
     </div>
 
     <div class="control-row">
-      <button class="mini-button js-copy-button" data-copy="EVENT SCHEDULE" type="button">compact</button>
-      <button class="mini-button js-copy-button" data-copy="FLEXIBLE TEXT LAYOUT" type="button">headline</button>
-      <button class="mini-button js-copy-button" data-copy="A TITLE THAT ALWAYS FITS" type="button">long</button>
+      <button class="mini-button js-copy-button" data-copy="SALE" type="button">short</button>
+      <button class="mini-button js-copy-button" data-copy="EVENT SCHEDULE" type="button">middle</button>
+      <button class="mini-button js-copy-button" data-copy="RESPONSIVE HEADLINE LAYOUT" type="button">long</button>
     </div>
   </section>
 </main>
@@ -102,16 +111,18 @@
   const frame = document.querySelector(".js-fit-frame");
   const title = document.querySelector(".js-fit-title");
   const range = document.querySelector(".js-width-range");
+  const widthLabel = document.querySelector(".js-width-label");
   const buttons = [...document.querySelectorAll(".js-copy-button")];
 
   const fittedTitle = fitty(title, {
-    // デザイン上の下限と上限を決め、極端に小さい文字や巨大な文字を避ける
-    minSize: 18,
-    maxSize: 110,
+    // 短い文字列でも長い文字列でも、スライダー全体で変化が見える範囲にする
+    minSize: 10,
+    maxSize: 220,
   });
 
   function fitToCurrentFrame() {
     frame.style.setProperty("--fit-width", `${range.value}px`);
+    widthLabel.textContent = range.value;
 
     // 幅を変更した直後に、Fittyへ再計算を促す
     window.requestAnimationFrame(() => {
