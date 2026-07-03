@@ -11,6 +11,10 @@
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
+
+      @media (max-width: 560px) {
+        grid-template-columns: 1fr;
+      }
     }
 
     .signal-card {
@@ -18,18 +22,18 @@
       place-items: center;
       min-height: 112px;
       padding: 16px;
-    }
 
-    .signal-card:nth-child(1) {
-      background: var(--soft-blue);
-    }
+      &:nth-child(1) {
+        background: var(--soft-blue);
+      }
 
-    .signal-card:nth-child(2) {
-      background: var(--soft);
-    }
+      &:nth-child(3) {
+        background: var(--soft-purple);
+      }
 
-    .signal-card:nth-child(3) {
-      background: var(--soft-purple);
+      @media (max-width: 560px) {
+        min-height: 104px;
+      }
     }
 
     .slot-label {
@@ -47,27 +51,17 @@
     .slot-label-en {
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
       font-size: 1.8rem;
+
+      @media (max-width: 560px) {
+        font-size: 1.65rem;
+      }
     }
 
     .slot-label-ja {
       font-size: 1.22rem;
       color: var(--primary);
-    }
 
-    @media (max-width: 560px) {
-      .signal-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .signal-card {
-        min-height: 104px;
-      }
-
-      .slot-label-en {
-        font-size: 1.65rem;
-      }
-
-      .slot-label-ja {
+      @media (max-width: 560px) {
         font-size: 1.14rem;
       }
     }
@@ -107,44 +101,30 @@
 <script type="module">
   import { slotText } from "https://esm.sh/slot-text@0.3.1";
 
-  const items = [
-    {
-      controller: slotText(document.querySelector(".js-copy-label-en"), "Copy"),
-      direction: "up",
-    },
-    {
-      controller: slotText(document.querySelector(".js-copy-label-ja"), "コピー"),
-      direction: "up",
-    },
-    {
-      controller: slotText(document.querySelector(".js-status-label-en"), "Online"),
-      direction: "down",
-    },
-    {
-      controller: slotText(document.querySelector(".js-status-label-ja"), "オンライン"),
-      direction: "down",
-    },
-    {
-      controller: slotText(document.querySelector(".js-save-label-en"), "Saving"),
-      direction: "up",
-    },
-    {
-      controller: slotText(document.querySelector(".js-save-label-ja"), "保存中"),
-      direction: "up",
-    },
-  ];
-
   const scenes = [
     ["Copy", "コピー", "Online", "オンライン", "Saving", "保存中"],
     ["Copied", "コピー済み", "Offline", "オフライン", "Done", "完了"],
   ];
+
+  const targets = [
+    { selector: ".js-copy-label-en", direction: "up" },
+    { selector: ".js-copy-label-ja", direction: "up" },
+    { selector: ".js-status-label-en", direction: "down" },
+    { selector: ".js-status-label-ja", direction: "down" },
+    { selector: ".js-save-label-en", direction: "up" },
+    { selector: ".js-save-label-ja", direction: "up" },
+  ];
+
+  const items = targets.map((target, index) => ({
+    controller: slotText(document.querySelector(target.selector), scenes[0][index]),
+    direction: target.direction,
+  }));
 
   let sceneIndex = 0;
 
   function rollLabels() {
     sceneIndex = (sceneIndex + 1) % scenes.length;
 
-    // 文字数が少ないUIラベルだけを差し替え、本文の読みやすさは保つ
     items.forEach((item, index) => {
       item.controller.set(scenes[sceneIndex][index], {
         direction: item.direction,

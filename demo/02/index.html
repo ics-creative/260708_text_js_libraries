@@ -10,6 +10,10 @@
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
+
+      @media (max-width: 560px) {
+        grid-template-columns: 1fr;
+      }
     }
 
     .metric-card {
@@ -17,22 +21,14 @@
       place-items: center;
       min-height: 132px;
       padding: 16px;
-    }
 
-    .metric-card:nth-child(1) {
-      background: var(--soft-blue);
-    }
+      &:nth-child(1) {
+        background: var(--soft-blue);
+      }
 
-    .metric-card:nth-child(2) {
-      background: var(--soft);
-    }
-
-    .metric-card:nth-child(3) {
-      background: var(--soft-purple);
-    }
-
-    .metric-card:nth-child(4) {
-      background: #f5f3ff;
+      &:nth-child(3) {
+        background: var(--soft-purple);
+      }
     }
 
     number-flow {
@@ -42,14 +38,8 @@
       font-weight: 850;
       line-height: 1.05;
       color: var(--ink);
-    }
 
-    @media (max-width: 560px) {
-      .metric-grid {
-        grid-template-columns: 1fr;
-      }
-
-      number-flow {
+      @media (max-width: 560px) {
         font-size: 2rem;
       }
     }
@@ -60,19 +50,19 @@
 <main class="wrapper">
   <section class="metric-grid">
     <div class="panel metric-card">
-      <number-flow class="js-flow" data-will-change></number-flow>
+      <number-flow class="js-flow"></number-flow>
     </div>
 
     <div class="panel metric-card">
-      <number-flow class="js-flow" data-will-change></number-flow>
+      <number-flow class="js-flow"></number-flow>
     </div>
 
     <div class="panel metric-card">
-      <number-flow class="js-flow" data-will-change></number-flow>
+      <number-flow class="js-flow"></number-flow>
     </div>
 
     <div class="panel metric-card">
-      <number-flow class="js-flow" data-will-change></number-flow>
+      <number-flow class="js-flow"></number-flow>
     </div>
   </section>
 
@@ -86,7 +76,6 @@
 
   const flows = [...document.querySelectorAll(".js-flow")];
 
-  // 2枚目は1桁同士、4枚目は2桁から3桁への変化にして、桁数の違いを見比べやすくする
   const metricSets = [
     [12480, 7, 86000, 88],
     [13950, 4, 92000, 104],
@@ -96,7 +85,6 @@
   let metricIndex = 0;
 
   flows.forEach((flow, index) => {
-    // 数字のフォーマットは用途ごとに変え、UIの文脈を短く保つ
     if (index === 2) {
       flow.format = { style: "currency", currency: "JPY", maximumFractionDigits: 0 };
     } else {

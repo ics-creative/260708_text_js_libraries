@@ -12,6 +12,11 @@
       padding: 22px;
       background: var(--deep);
       color: #ebe9fc;
+
+      .control-button {
+        color: var(--primary);
+        background: #ebe9fc;
+      }
     }
 
     .decode-window {
@@ -30,17 +35,8 @@
       line-height: 1.05;
       color: #ffffff;
       word-break: break-word;
-    }
 
-    .decode-panel .control-button {
-      justify-self: center;
-      width: fit-content;
-      color: var(--primary);
-      background: #ebe9fc;
-    }
-
-    @media (max-width: 560px) {
-      .decode-title {
+      @media (max-width: 560px) {
         font-size: 1.85rem;
       }
     }
@@ -79,7 +75,6 @@
   function decodeNextTitle() {
     phraseIndex = (phraseIndex + 1) % phrases.length;
 
-    // 収束後に読みたい短い見出しだけを差し替える
     shuffle.setText(phrases[phraseIndex]);
     shuffle.start();
   }

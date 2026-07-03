@@ -47,6 +47,10 @@
       line-height: 0.95;
       text-align: center;
       color: var(--ink);
+
+      @media (max-width: 560px) {
+        font-size: 96px;
+      }
     }
 
     .fit-inner {
@@ -71,12 +75,6 @@
     .width-range {
       width: 100%;
       accent-color: var(--primary);
-    }
-
-    @media (max-width: 560px) {
-      .fit-title {
-        font-size: 96px;
-      }
     }
   </style>
 </head>
@@ -115,7 +113,6 @@
   const buttons = [...document.querySelectorAll(".js-copy-button")];
 
   const fittedTitle = fitty(title, {
-    // 短い文字列でも長い文字列でも、スライダー全体で変化が見える範囲にする
     minSize: 10,
     maxSize: 220,
   });
@@ -124,10 +121,8 @@
     frame.style.setProperty("--fit-width", `${range.value}px`);
     widthLabel.textContent = range.value;
 
-    // 幅を変更した直後に、Fittyへ再計算を促す
-    window.requestAnimationFrame(() => {
-      fittedTitle.fit({ sync: true });
-    });
+    // 親要素の幅変更は自動検知されないため、明示的に再計算する
+    fittedTitle.fit({ sync: true });
   }
 
   range.addEventListener("input", fitToCurrentFrame);
@@ -135,7 +130,6 @@
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
       title.textContent = button.dataset.copy;
-      fittedTitle.fit({ sync: true });
     });
   });
 

@@ -15,7 +15,6 @@
   --soft-purple: #ebe9fc;
   --deep: #21136f;
   --primary: #3223b3;
-  --accent: #bab4ff;
 }
 
 html {
@@ -35,6 +34,10 @@ body {
   line-height: 1.7;
   color: var(--ink);
   background-color: #2b2840;
+
+  @media (max-width: 520px) {
+    padding: 16px;
+  }
 }
 
 button,
@@ -56,6 +59,10 @@ button {
   padding: 24px;
   border-radius: 10px;
   background: var(--base);
+
+  @media (max-width: 520px) {
+    padding: 16px;
+  }
 }
 
 .panel {
@@ -77,6 +84,11 @@ button {
   border-radius: 8px;
   color: #ffffff;
   background: var(--primary);
+
+  &:active {
+    transform: translateY(1px);
+    background: var(--deep);
+  }
 }
 
 .control-button {
@@ -90,22 +102,6 @@ button {
   padding: 8px 10px;
 }
 
-.control-button:active,
-.mini-button:active {
-  transform: translateY(1px);
-  background: var(--deep);
-}
-
 .mono {
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-}
-
-@media (max-width: 520px) {
-  body {
-    padding: 16px;
-  }
-
-  .wrapper {
-    padding: 16px;
-  }
 }
