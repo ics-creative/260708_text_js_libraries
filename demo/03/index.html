@@ -127,6 +127,7 @@
     { word: "コピー完了", number: "20.8" },
   ];
 
+  // 対象要素とアニメーション設定を渡してTextMorphを作成する
   const wordMorph = new TextMorph({
     element: wordElement,
     duration: 460,
@@ -147,6 +148,7 @@
     wordIndex = nextIndex;
     const scene = scenes[wordIndex];
 
+    // update()で次の文字列へモーフィングする
     wordMorph.update(scene.word);
     numberMorph.update(scene.number);
   }

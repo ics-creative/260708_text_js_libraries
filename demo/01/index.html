@@ -116,6 +116,7 @@
   ];
 
   const items = targets.map((target, index) => ({
+    // 初期表示の文字列を渡して、対象要素用のcontrollerを作成する
     controller: slotText(document.querySelector(target.selector), scenes[0][index]),
     direction: target.direction,
   }));
@@ -126,6 +127,7 @@
     sceneIndex = (sceneIndex + 1) % scenes.length;
 
     items.forEach((item, index) => {
+      // set()に次の文字列を渡すと、スロット風に切り替わる
       item.controller.set(scenes[sceneIndex][index], {
         direction: item.direction,
       });

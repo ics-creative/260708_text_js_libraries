@@ -65,6 +65,7 @@
     "READY FOR PUBLISH",
   ];
 
+  // 対象要素を渡してShuffleTextを作成する
   const shuffle = new ShuffleText(title);
   shuffle.duration = 760;
   shuffle.emptyCharacter = ".";
@@ -75,6 +76,7 @@
   function decodeNextTitle() {
     phraseIndex = (phraseIndex + 1) % phrases.length;
 
+    // setText()で完成形を指定し、start()で演出を再生する
     shuffle.setText(phrases[phraseIndex]);
     shuffle.start();
   }

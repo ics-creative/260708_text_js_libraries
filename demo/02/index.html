@@ -91,8 +91,11 @@
       flow.format = { maximumFractionDigits: 0 };
     }
 
+    // 表示形式やロケール、動きのプラグインを要素へ設定する
     flow.locales = "ja-JP";
     flow.plugins = [continuous];
+
+    // update()に数値を渡すと、差分がアニメーションする
     flow.update(metricSets[metricIndex][index]);
   });
 

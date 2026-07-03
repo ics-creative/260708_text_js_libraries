@@ -114,6 +114,7 @@
   const fontSize = document.querySelector(".js-font-size");
   const buttons = [...document.querySelectorAll(".js-copy-button")];
 
+  // 対象テキストと、調整するフォントサイズの範囲を指定する
   const fittedTitle = fitty(title, {
     minSize: 10,
     maxSize: 220,
@@ -122,7 +123,7 @@
   function fitToCurrentFrame() {
     frame.style.setProperty("--fit-width", `${range.value}px`);
 
-    // 親要素の幅変更は自動検知されないため、明示的に再計算する
+    // 親要素の幅を変えた場合は、fit()で再計算する
     fittedTitle.fit({ sync: true });
   }
 
