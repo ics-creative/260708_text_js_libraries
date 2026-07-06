@@ -11,7 +11,7 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
 
-      @media (max-width: 560px) {
+      @media (width <= 560px) {
         grid-template-columns: 1fr;
       }
     }
@@ -33,14 +33,13 @@
 
     number-flow {
       width: fit-content;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 2.45rem;
-      font-weight: 850;
+      font-size: 39px;
+      font-weight: bold;
       line-height: 1.05;
       color: var(--ink);
 
-      @media (max-width: 560px) {
-        font-size: 2rem;
+      @media (width <= 560px) {
+        font-size: 32px;
       }
     }
   </style>
@@ -50,19 +49,19 @@
 <main class="wrapper">
   <section class="metric-grid">
     <div class="panel metric-card">
-      <number-flow class="js-flow"></number-flow>
+      <number-flow class="mono js-flow" data-will-change></number-flow>
     </div>
 
     <div class="panel metric-card">
-      <number-flow class="js-flow"></number-flow>
+      <number-flow class="mono js-flow" data-will-change></number-flow>
     </div>
 
     <div class="panel metric-card">
-      <number-flow class="js-flow"></number-flow>
+      <number-flow class="mono js-flow" data-will-change></number-flow>
     </div>
 
     <div class="panel metric-card">
-      <number-flow class="js-flow"></number-flow>
+      <number-flow class="mono js-flow" data-will-change></number-flow>
     </div>
   </section>
 

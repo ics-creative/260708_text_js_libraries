@@ -41,14 +41,13 @@
     .fit-title {
       display: inline-block;
       white-space: nowrap;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
       font-size: 120px;
-      font-weight: 900;
+      font-weight: bold;
       line-height: 0.95;
       text-align: center;
       color: var(--ink);
 
-      @media (max-width: 560px) {
+      @media (width <= 560px) {
         font-size: 96px;
       }
     }
@@ -65,9 +64,34 @@
       flex-wrap: wrap;
       gap: 8px 14px;
       justify-content: center;
-      margin-bottom: 4px;
-      font-size: 0.88rem;
+      font-size: 14px;
+      text-align: center;
       color: var(--muted);
+    }
+
+    .range-field {
+      display: grid;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .range-label,
+    .length-label {
+      font-size: 14px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .range-label {
+      display: flex;
+      gap: 4px;
+      justify-content: center;
+    }
+
+    .length-field {
+      display: grid;
+      gap: 6px;
+      justify-items: center;
     }
 
     .width-range {
@@ -83,7 +107,7 @@
     <div class="fit-stage">
       <div class="fit-frame js-fit-frame">
         <div class="fit-inner">
-          <p class="fit-title js-fit-title">RESPONSIVE HEADLINE LAYOUT</p>
+          <p class="fit-title mono js-fit-title">RESPONSIVE HEADLINE LAYOUT</p>
         </div>
       </div>
     </div>
@@ -93,13 +117,20 @@
         <span>container: <span class="js-container-size">0</span>px</span>
         <span>font-size: <span class="js-font-size">0</span>px</span>
       </p>
+    </div>
+
+    <div class="range-field">
+      <p class="range-label">Width <span class="js-width-label">280</span>px</p>
       <input class="width-range js-width-range" max="380" min="150" type="range" value="280" />
     </div>
 
-    <div class="control-row">
-      <button class="mini-button js-copy-button" data-copy="SALE" type="button">short</button>
-      <button class="mini-button js-copy-button" data-copy="EVENT SCHEDULE" type="button">middle</button>
-      <button class="mini-button js-copy-button" data-copy="RESPONSIVE HEADLINE LAYOUT" type="button">long</button>
+    <div class="length-field">
+      <p class="length-label">Length</p>
+      <div class="control-row">
+        <button class="mini-button js-copy-button" data-copy="SALE" type="button">short</button>
+        <button class="mini-button js-copy-button" data-copy="EVENT SCHEDULE" type="button">medium</button>
+        <button class="mini-button js-copy-button" data-copy="RESPONSIVE HEADLINE LAYOUT" type="button">long</button>
+      </div>
     </div>
   </section>
 </main>
@@ -110,6 +141,7 @@
   const frame = document.querySelector(".js-fit-frame");
   const title = document.querySelector(".js-fit-title");
   const range = document.querySelector(".js-width-range");
+  const widthLabel = document.querySelector(".js-width-label");
   const containerSize = document.querySelector(".js-container-size");
   const fontSize = document.querySelector(".js-font-size");
   const buttons = [...document.querySelectorAll(".js-copy-button")];
@@ -122,6 +154,7 @@
 
   function fitToCurrentFrame() {
     frame.style.setProperty("--fit-width", `${range.value}px`);
+    widthLabel.textContent = range.value;
 
     // 親要素の幅を変えた場合は、fit()で再計算する
     fittedTitle.fit({ sync: true });

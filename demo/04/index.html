@@ -29,15 +29,14 @@
     }
 
     .decode-title {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 2.35rem;
-      font-weight: 900;
+      font-size: 38px;
+      font-weight: bold;
       line-height: 1.05;
       color: #ffffff;
       word-break: break-word;
 
-      @media (max-width: 560px) {
-        font-size: 1.85rem;
+      @media (width <= 560px) {
+        font-size: 30px;
       }
     }
   </style>
@@ -47,7 +46,7 @@
 <main class="wrapper">
   <section class="panel decode-panel">
     <div class="decode-window">
-      <h2 class="decode-title js-shuffle-title">MIDNIGHT TYPE SIGNAL</h2>
+      <h2 class="decode-title mono js-shuffle-title">MIDNIGHT TYPE SIGNAL</h2>
     </div>
 
     <button class="control-button js-decode" type="button">Play</button>

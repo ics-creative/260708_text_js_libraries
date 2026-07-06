@@ -35,7 +35,7 @@ body {
   color: var(--ink);
   background-color: #2b2840;
 
-  @media (max-width: 520px) {
+  @media (width <= 520px) {
     padding: 16px;
   }
 }
@@ -60,7 +60,7 @@ button {
   border-radius: 10px;
   background: var(--base);
 
-  @media (max-width: 520px) {
+  @media (width <= 520px) {
     padding: 16px;
   }
 }
