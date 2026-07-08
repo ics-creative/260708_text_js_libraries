@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>テキストまわりを整えるJSライブラリまとめのデモ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Noto+Sans+JP:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: light;
+        --text: #182026;
+        --muted: #60707d;
+        --line: #d7e0e7;
+        --bg: #f7fafc;
+        --panel: #ffffff;
+        --accent: #116d8f;
+        --accent-bg: #e5f6fb;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: Inter, "Noto Sans JP", sans-serif;
+        line-height: 1.75;
+      }
+
+      main {
+        width: min(920px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 56px 0 64px;
+      }
+
+      h1 {
+        margin: 0 0 12px;
+        font-size: clamp(28px, 5vw, 44px);
+        line-height: 1.25;
+        letter-spacing: 0;
+      }
+
+      p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      section {
+        margin-top: 40px;
+      }
+
+      h2 {
+        margin: 0 0 16px;
+        font-size: 22px;
+        line-height: 1.4;
+        letter-spacing: 0;
+      }
+
+      .demo-list {
+        display: grid;
+        gap: 12px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .demo-item {
+        display: grid;
+        grid-template-columns: 1fr auto auto;
+        gap: 12px;
+        align-items: center;
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+
+      .demo-name {
+        font-weight: 800;
+      }
+
+      a {
+        color: var(--accent);
+        text-decoration-thickness: 0.08em;
+        text-underline-offset: 0.18em;
+      }
+
+      .button-link {
+        display: inline-flex;
+        justify-content: center;
+        min-width: 112px;
+        padding: 8px 14px;
+        border-radius: 6px;
+        background: var(--accent-bg);
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .library-list {
+        columns: 2;
+        margin: 0;
+        padding-left: 1.2em;
+      }
+
+      @media (width <= 640px) {
+        main {
+          width: min(100% - 28px, 920px);
+          padding-top: 36px;
+        }
+
+        .demo-item {
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+
+        .button-link {
+          width: 100%;
+        }
+
+        .library-list {
+          columns: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>テキストまわりを整えるJSライブラリまとめのデモ</h1>
+      <p>記事で紹介している5種類のライブラリのデモです。</p>
+
+      <section>
+        <h2>デモ</h2>
+        <ol class="demo-list">
+          <li class="demo-item">
+            <span class="demo-name">slot-text</span>
+            <a class="button-link" href="./demo/01/">デモを開く</a>
+            <a href="./demo/01/index.html">ソースコード</a>
+          </li>
+          <li class="demo-item">
+            <span class="demo-name">NumberFlow</span>
+            <a class="button-link" href="./demo/02/">デモを開く</a>
+            <a href="./demo/02/index.html">ソースコード</a>
+          </li>
+          <li class="demo-item">
+            <span class="demo-name">Torph</span>
+            <a class="button-link" href="./demo/03/">デモを開く</a>
+            <a href="./demo/03/index.html">ソースコード</a>
+          </li>
+          <li class="demo-item">
+            <span class="demo-name">shuffle-text</span>
+            <a class="button-link" href="./demo/04/">デモを開く</a>
+            <a href="./demo/04/index.html">ソースコード</a>
+          </li>
+          <li class="demo-item">
+            <span class="demo-name">Fitty</span>
+            <a class="button-link" href="./demo/05/">デモを開く</a>
+            <a href="./demo/05/index.html">ソースコード</a>
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>利用ライブラリ</h2>
+        <ul class="library-list">
+          <li><a href="https://github.com/Danilaa1/slot-text">slot-text</a> 0.3.1</li>
+          <li><a href="https://github.com/barvian/number-flow">number-flow</a> 0.6.0</li>
+          <li><a href="https://github.com/lochie/torph">torph</a> 0.0.9</li>
+          <li><a href="https://github.com/ics-ikeda/shuffle-text">shuffle-text</a> 0.5.2</li>
+          <li><a href="https://github.com/rikschennink/fitty">fitty</a> 2.4.2</li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>
