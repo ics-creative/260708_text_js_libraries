@@ -8,20 +8,42 @@
   <style>
     .morph-panel {
       display: grid;
-      gap: 18px;
+      gap: 38px;
       padding: 22px;
       overflow: hidden;
+    }
+
+    .morph-section {
+      display: grid;
+      gap: 12px;
+    }
+
+    .morph-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+
+      @media (width <= 560px) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .morph-caption {
+      font-size: 14px;
+      line-height: 1.2;
+      text-align: center;
+      color: var(--muted);
     }
 
     .morph-title {
       display: grid;
       place-items: center;
-      min-height: 140px;
-      font-size: 48px;
+      min-height: 118px;
+      font-size: 42px;
       line-height: 1.05;
 
       @media (width <= 560px) {
-        min-height: 116px;
+        min-height: 104px;
         font-size: 38px;
       }
     }
@@ -97,14 +119,22 @@
 <body>
 <main class="wrapper">
   <section class="panel morph-panel">
-    <h2 class="morph-title">
-      <span class="morph-word mono js-morph-word">Copy</span>
-    </h2>
+    <div class="morph-grid">
+      <div class="morph-section">
+        <p class="morph-caption">Text</p>
+        <h2 class="morph-title">
+          <span class="morph-word mono js-morph-word">Copy</span>
+        </h2>
+      </div>
 
-    <div class="number-stage">
-      <div class="number-field">
-        <span class="number-text mono js-number-label">2</span>
-        <span class="number-cursor"></span>
+      <div class="morph-section">
+        <p class="morph-caption">Number</p>
+        <div class="number-stage">
+          <div class="number-field">
+            <span class="number-text mono js-number-label">2</span>
+            <span class="number-cursor"></span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -119,12 +149,8 @@
 
   const wordElement = document.querySelector(".js-morph-word");
   const numberElement = document.querySelector(".js-number-label");
-  const scenes = [
-    { word: "Copy", number: "2" },
-    { word: "Copied", number: "20" },
-    { word: "コピー中", number: "20." },
-    { word: "コピー完了", number: "20.8" },
-  ];
+  const words = ["Copy", "Copied", "コピー中", "コピー完了"];
+  const numbers = ["2", "20", "20.8"];
 
   // 対象要素とアニメーション設定を渡してTextMorphを作成する
   const wordMorph = new TextMorph({
@@ -141,19 +167,17 @@
     locale: "ja",
   });
 
-  let wordIndex = 0;
+  let sceneIndex = 0;
 
   function updateDemo(nextIndex) {
-    wordIndex = nextIndex;
-    const scene = scenes[wordIndex];
-
+    sceneIndex = nextIndex;
     // update()で次の文字列へモーフィングする
-    wordMorph.update(scene.word);
-    numberMorph.update(scene.number);
+    wordMorph.update(words[sceneIndex % words.length]);
+    numberMorph.update(numbers[sceneIndex % numbers.length]);
   }
 
   document.querySelector(".js-change").addEventListener("click", () => {
-    updateDemo((wordIndex + 1) % scenes.length);
+    updateDemo((sceneIndex + 1) % words.length);
   });
 
   updateDemo(0);
