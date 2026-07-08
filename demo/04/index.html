@@ -33,7 +33,7 @@
       font-weight: bold;
       line-height: 1.05;
       color: #ffffff;
-      word-break: break-word;
+      white-space: nowrap;
 
       @media (width <= 560px) {
         font-size: 30px;
@@ -46,7 +46,7 @@
 <main class="wrapper">
   <section class="panel decode-panel">
     <div class="decode-window">
-      <h2 class="decode-title mono js-shuffle-title">MIDNIGHT TYPE SIGNAL</h2>
+      <h2 class="decode-title mono js-shuffle-title">TYPE SIGNAL</h2>
     </div>
 
     <button class="control-button js-decode" type="button">Play</button>
@@ -58,10 +58,10 @@
 
   const title = document.querySelector(".js-shuffle-title");
   const phrases = [
-    "MIDNIGHT TYPE SIGNAL",
-    "COPY FROM THE FUTURE",
-    "WORDS ARE ON AIR",
-    "READY FOR PUBLISH",
+    "TYPE SIGNAL",
+    "FUTURE COPY",
+    "WORDS ON AIR",
+    "READY TYPE",
   ];
 
   // 対象要素を渡してShuffleTextを作成する

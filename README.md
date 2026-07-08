@@ -2,11 +2,13 @@
 
 ## デモ
 
-- [1. slot-text](./demo/01/)
-- [2. NumberFlow](./demo/02/)
-- [3. Torph](./demo/03/)
-- [4. shuffle-text](./demo/04/)
-- [5. Fitty](./demo/05/)
+| デモ | 動作確認 | ソースコード |
+| --- | --- | --- |
+| 1. slot-text | [デモを開く](https://ics-creative.github.io/260708_text_js_libraries/demo/01/) | [index.html](./demo/01/index.html) |
+| 2. NumberFlow | [デモを開く](https://ics-creative.github.io/260708_text_js_libraries/demo/02/) | [index.html](./demo/02/index.html) |
+| 3. Torph | [デモを開く](https://ics-creative.github.io/260708_text_js_libraries/demo/03/) | [index.html](./demo/03/index.html) |
+| 4. shuffle-text | [デモを開く](https://ics-creative.github.io/260708_text_js_libraries/demo/04/) | [index.html](./demo/04/index.html) |
+| 5. Fitty | [デモを開く](https://ics-creative.github.io/260708_text_js_libraries/demo/05/) | [index.html](./demo/05/index.html) |
 
 ## 利用ライブラリ
 
